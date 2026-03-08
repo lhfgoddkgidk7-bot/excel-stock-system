@@ -283,19 +283,19 @@ def generate_excel():
             cell.alignment = Alignment(horizontal="center", vertical="center")
             cell.font = input_font
     # 总计行（修正合并单元格赋值问题）
-# 1. 先给K14设置格式和公式（合并前操作）
-ws_invoice['K14'].font = Font(size=11, bold=True)
-ws_invoice['K14'].number_format = '#,##0.00'
-ws_invoice['K14'].value = "=SUM(K9:K13)"
-ws_invoice['K14'].alignment = Alignment(horizontal="center", vertical="center")
+    # 1. 先给K14设置格式和公式（合并前操作）
+    ws_invoice['K14'].font = Font(size=11, bold=True)
+    ws_invoice['K14'].number_format = '#,##0.00'
+    ws_invoice['K14'].value = "=SUM(K9:K13)"
+    ws_invoice['K14'].alignment = Alignment(horizontal="center", vertical="center")
 
-# 2. 再合并单元格（B14:K14）
-ws_invoice.merge_cells('B14:K14')
+    # 2. 再合并单元格（B14:K14）
+    ws_invoice.merge_cells('B14:K14')
 
-# 3. 给合并后的首单元格设置总计文字
-ws_invoice['B14'] = "总计 / TOTAL:"
-ws_invoice['B14'].font = Font(size=11, bold=True)
-ws_invoice['B14'].alignment = Alignment(horizontal="right", vertical="center")
+    # 3. 给合并后的首单元格设置总计文字
+    ws_invoice['B14'] = "总计 / TOTAL:"
+    ws_invoice['B14'].font = Font(size=11, bold=True)
+    ws_invoice['B14'].alignment = Alignment(horizontal="right", vertical="center")
     ws_invoice['B16'] = "备注 / Observaciones:"
     ws_invoice['B16'].font = Font(size=10, bold=True)
     ws_invoice.merge_cells('B17:K19')
