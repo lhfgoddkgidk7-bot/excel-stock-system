@@ -35,8 +35,13 @@ def set_column_width(ws, widths):
         ws.column_dimensions[col].width = width
 
 def apply_title(ws, title, row=1, col_range="A:F"):
-    ws.merge_cells(col_range + str(row))
-    cell = ws[f'B{row}']
+    """应用标题样式"""
+    # 修正合并单元格范围：将 "B:G"+"1" 改为 "B1:G1"
+    start_col, end_col = col_range.split(":")
+    merge_range = f"{start_col}{row}:{end_col}{row}"
+    ws.merge_cells(merge_range)
+    # 取合并区域的第一个单元格（而非固定B列），避免列范围超出的问题
+    cell = ws[f'{start_col}{row}']
     cell.value = title
     cell.font = title_font
     cell.fill = title_fill
@@ -122,7 +127,7 @@ def generate_excel():
 
     # 3. 商品信息
     ws_products = wb.create_sheet("商品信息")
-    ws_products.sheet_view.showGrid_views = False
+    ws_products.sheet_view.showGridLines = False
     apply_title(ws_products, "商品信息", col_range="B:H")
     headers_products = ["商品名称", "商品型号", "商品颜色", "商品数量", "长度(m)", "米重(kg/m)", "支重(kg)"]
     apply_header(ws_products, headers_products)
